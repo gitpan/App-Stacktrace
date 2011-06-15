@@ -6,7 +6,7 @@ App::Stacktrace - Stack trace
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
@@ -40,7 +40,7 @@ use Pod::Usage ();
 use XSLoader ();
 use File::Temp ();
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 XSLoader::load(__PACKAGE__, $VERSION);
 
@@ -62,11 +62,11 @@ sub run {
     $self->_read_arguments( @_ );
 
     my $script = $self->_custom_generated_script;
-    if ($self->{exec}) {
-        $self->_run_gdb($script);
-    }
-    elsif ($self->{m}) {
+    if ($self->{m}) {
         print $script;
+    }
+    else {
+        $self->_run_gdb($script);
     }
 
     return;
