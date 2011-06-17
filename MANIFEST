@@ -3,6 +3,7 @@ MANIFEST
 META.json
 META.yml
 Makefile.PL
+README
 Stacktrace.xs
 bin/perl-stacktrace
 dist.ini

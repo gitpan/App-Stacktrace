@@ -6,13 +6,14 @@ App::Stacktrace - Stack trace
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 SYNOPSIS
 
   perl-stacktrace [option] pid
 
-    --help
+    -m      Prints a gdb script
+    --help  Show this help
 
 =head1 DESCRIPTION
 
@@ -40,7 +41,7 @@ use Pod::Usage ();
 use XSLoader ();
 use File::Temp ();
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 XSLoader::load(__PACKAGE__, $VERSION);
 
