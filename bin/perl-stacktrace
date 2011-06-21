@@ -6,7 +6,7 @@ perl-stacktrace - Stack trace
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 DESCRIPTION
 
@@ -18,6 +18,8 @@ are printed.
 
   perl-stacktrace [pid]
     --help
+    -m      Print gdb script
+    -v      Verbose
 
 =cut
 

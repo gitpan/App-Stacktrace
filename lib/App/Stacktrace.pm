@@ -6,7 +6,7 @@ App::Stacktrace - Stack trace
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
@@ -41,7 +41,7 @@ use Pod::Usage ();
 use XSLoader ();
 use File::Temp ();
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 XSLoader::load(__PACKAGE__, $VERSION);
 
@@ -51,6 +51,8 @@ sub new {
         pid        => undef,
         version    => undef,
         arch       => undef,
+        m          => undef,
+        v          => undef,
         'exec'     => 1,
         @_
     };
@@ -84,6 +86,7 @@ sub _read_arguments {
                 -exitcode => 0 );
         },
         'm',
+        'v',
         'exec',
         'version=s',
         'arch=s',
@@ -128,6 +131,10 @@ sub _TODO_add_constants {
 # Any changes made here will be lost!
 #
 TODO_preamble
+
+    if ($self->{v}) {
+        $src .= "set trace-commands on\n";
+    }
 
     my $offsets = App::Stacktrace::_perl_offsets();
     for my $name (sort keys %$offsets) {
