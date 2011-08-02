@@ -54,9 +54,8 @@ elsif ($pstack_pid) {
         Test::More::like(
         $trace,
             qr{
-                ^t/unthreaded\.t:\d+\n
                 (?:
-                    ^(?:\+*\ *)t/unthreaded\.t:\d+\n
+                    ^t/unthreaded\.t:\d+\n
                 ){10}
             }xm
         );
@@ -90,10 +89,10 @@ elsif ($script_pid) {
     require App::Stacktrace;
     open STDOUT, '>&=' . fileno( $pstack_wr );
     open STDERR, '>&=' . fileno( $pstack_wr );
-    App::Stacktrace->new->run(
+    App::Stacktrace->new(
         '--exec',
         $script_pid
-    );
+    )->run;
     kill 2, $script_pid;
     exit;
 }

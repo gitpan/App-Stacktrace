@@ -6,7 +6,7 @@ perl-stacktrace - Stack trace
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 DESCRIPTION
 
@@ -24,5 +24,5 @@ are printed.
 =cut
 
 use App::Stacktrace;
-App::Stacktrace->new->run(@ARGV);
+App::Stacktrace->new(@ARGV)->run;
 exit;
