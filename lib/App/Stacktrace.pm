@@ -6,14 +6,18 @@ App::Stacktrace - Stack trace
 
 =head1 VERSION
 
-version 0.08
+version 0.09
 
 =head1 SYNOPSIS
 
   perl-stacktrace [option] pid
 
     -m      Prints a gdb script
+    -v      Verbose debugging
+    -c      Additionally, prints C stacktrace
     --help  Show this help
+
+    --exec  exec() into gdb
 
 =head1 DESCRIPTION
 
@@ -70,7 +74,7 @@ use Pod::Usage ();
 use XSLoader ();
 use File::Temp ();
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 XSLoader::load(__PACKAGE__, $VERSION);
 
@@ -114,6 +118,7 @@ sub _read_arguments {
         'help',
         'm',
         'v',
+        'c',
         'exec!',
     )
       or Pod::Usage::pod2usage(
@@ -130,6 +135,7 @@ sub _read_arguments {
     $self->{pid}         = $args{pid};
     $self->{dump_script} = $args{m};
     $self->{verbose}     = $args{v};
+    $self->{c_backtrace} = $args{v} || $args{c};
     $self->{exec}        = $args{exec};
 
     return;
@@ -193,6 +199,12 @@ THREADS
         or die "Can't open $template_script: $!";
     local $/;
     $src .= readline $template_fh;
+
+    if ($self->{c_backtrace}) {
+        $src .= <<"C_BACKTRACE";
+backtrace
+C_BACKTRACE
+    }
 
     my $command = $self->_command_for_version;
     $src .= <<"INVOKE";
